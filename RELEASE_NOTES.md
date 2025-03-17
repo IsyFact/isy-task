@@ -7,6 +7,7 @@
 ### Umgesetzte Tickets
 - `IFS-4575`: Portierung fehlender Tickets aus isy-standards
 - `IFS-4526`: Logeintrag IsyTaskAspect korrigiert
+- `IFS-4495`: Verwendung der Defaults falls keine Task-Config definiert ist
 
 #### Bug Fixes
 - keine
