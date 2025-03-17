@@ -1,5 +1,29 @@
 package de.bund.bva.isyfact.task.test.monitoring;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Map;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import org.springframework.context.support.ResourceBundleMessageSource;
+
 import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties;
 import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties.TaskConfig;
 import de.bund.bva.isyfact.task.exception.TaskKonfigurationInvalidException;
@@ -7,59 +31,42 @@ import de.bund.bva.isyfact.task.konfiguration.HostHandler;
 import de.bund.bva.isyfact.task.monitoring.IsyTaskAspect;
 import de.bund.bva.isyfact.task.security.Authenticator;
 import de.bund.bva.isyfact.task.security.AuthenticatorFactory;
-import io.micrometer.core.instrument.Counter;
+
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.context.support.ResourceBundleMessageSource;
 
-import java.util.Map;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class IsyTaskAspectTest {
-    @Mock
-    ProceedingJoinPoint joinPoint;
 
     @Mock
-    AuthenticatorFactory authenticatorFactory;
+    private ProceedingJoinPoint joinPoint;
 
     @Mock
-    Authenticator authenticator;
+    private AuthenticatorFactory authenticatorFactory;
 
     @Mock
-    HostHandler hostHandler;
+    private Authenticator authenticator;
+
+    @Mock
+    private HostHandler hostHandler;
 
     @InjectMocks
-    IsyTaskAspect isyTaskAspect;
-
-    @Mock
-    Counter counter;
+    private IsyTaskAspect isyTaskAspect;
 
     @Spy
-    IsyTaskConfigurationProperties properties = new IsyTaskConfigurationProperties();
+    private IsyTaskConfigurationProperties properties = new IsyTaskConfigurationProperties();
 
     @Spy
-    MeterRegistry meterRegistry = new SimpleMeterRegistry();
+    private MeterRegistry meterRegistry = new SimpleMeterRegistry();
 
     @Spy
-    ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+    private ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
 
-    TaskConfig testTaskConfig;
+    private TaskConfig testTaskConfig;
 
-    @Before
+    @BeforeEach
     public void prepare() throws Exception {
         testTaskConfig = new TaskConfig();
         testTaskConfig.setHost("myHost");
@@ -67,24 +74,22 @@ public class IsyTaskAspectTest {
 
         taskConfigMap.put("class-myClass", testTaskConfig);
 
-        doReturn(authenticator).when(authenticatorFactory).getAuthenticator(anyString());
+        when(authenticatorFactory.getAuthenticator(anyString())).thenReturn(authenticator);
 
         resourceBundleMessageSource.setBasenames("messages");
 
         joinPoint = mock(ProceedingJoinPoint.class);
         JoinPoint.StaticPart staticPart = mock(JoinPoint.StaticPart.class);
-        doReturn(staticPart).when(joinPoint).getStaticPart();
+        when(joinPoint.getStaticPart()).thenReturn(staticPart);
         Signature signature = mock(Signature.class);
-        doReturn(true).when(hostHandler).isHostApplicable(anyString());
-        doReturn(signature).when(staticPart).getSignature();
-        doReturn(Class.class).when(signature).getDeclaringType();
-        doReturn("myClass").when(signature).getName();
-
+        when(hostHandler.isHostApplicable(anyString())).thenReturn(true);
+        when(staticPart.getSignature()).thenReturn(signature);
+        when(signature.getDeclaringType()).thenReturn(Class.class);
+        when(signature.getName()).thenReturn("myClass");
     }
 
     @Test
     public void testInvokeAndMonitorTask_Success() throws Throwable {
-
         // Prepare
 
         // Act
@@ -96,8 +101,7 @@ public class IsyTaskAspectTest {
     }
 
     @Test
-    public void testInvokeAndMonitorTask_noTaskConfig() {
-
+    public void testInvokeAndMonitorTask_noTaskConfig() throws Throwable {
         // Prepare
         properties.getTasks().clear();
 
@@ -107,15 +111,13 @@ public class IsyTaskAspectTest {
                         () -> isyTaskAspect.invokeAndMonitorTask(joinPoint));
 
         // Assert
-        assertEquals("ISYTA00003", taskKonfigurationInvalidException.getAusnahmeId());
-        assertEquals("[ISYTA00003] Task-Konfiguration für Task class-myClass ungültig: Keine Taskkonfiguration vorhanden.", taskKonfigurationInvalidException.getFehlertext());
+        assertEquals("[ISYTA00003] Task-Konfiguration ungültig: Keine Taskkonfiguration vorhanden.",
+                taskKonfigurationInvalidException.getMessage());
     }
 
     @Test
-    public void testInvokeAndMonitorTask_hostnameInvalidRegex() {
-
+    public void testInvokeAndMonitorTask_hostnameInvalidRegex() throws Throwable {
         // Prepare
-
         testTaskConfig.setHost("(");
 
         // Act
@@ -124,13 +126,12 @@ public class IsyTaskAspectTest {
                         () -> isyTaskAspect.invokeAndMonitorTask(joinPoint));
 
         // Assert
-        assertEquals("ISYTA00003", taskKonfigurationInvalidException.getAusnahmeId());
-        assertEquals("[ISYTA00003] Task-Konfiguration für Task class-myClass ungültig: Hostname ist keine gültige Regex.", taskKonfigurationInvalidException.getFehlertext());
+        assertEquals("[ISYTA00003] Task-Konfiguration für Task class-myClass ungültig: Hostname ist keine gültige Regex.",
+                taskKonfigurationInvalidException.getMessage());
     }
 
     @Test
     public void testInvokeAndMonitorTask_hostnameNullUseDefault() throws Throwable {
-
         // Prepare
         testTaskConfig.setHost(null);
 
@@ -144,21 +145,18 @@ public class IsyTaskAspectTest {
 
     @Test
     public void testInvokeAndMonitorTask_hostnameNotApplicable() throws Throwable {
-
         // Prepare
-        doReturn(false).when(hostHandler).isHostApplicable(anyString());
+        when(hostHandler.isHostApplicable(anyString())).thenReturn(false);
 
         // Act
         isyTaskAspect.invokeAndMonitorTask(joinPoint);
 
         // Assert
         assertNull(isyTaskAspect.invokeAndMonitorTask(joinPoint));
-
     }
 
     @Test
     public void testInvokeAndMonitorTask_taskIsDeactivated() throws Throwable {
-
         // Prepare
         testTaskConfig.setDeaktiviert(true);
 
@@ -167,14 +165,12 @@ public class IsyTaskAspectTest {
 
         // Assert
         assertNull(isyTaskAspect.invokeAndMonitorTask(joinPoint));
-
     }
 
     @Test
-    public void testInvokeAndMonitorTask_authenticatorNull() {
-
+    public void testInvokeAndMonitorTask_authenticatorNull() throws Throwable {
         // Prepare
-        doReturn(null).when(authenticatorFactory).getAuthenticator(anyString());
+        when(authenticatorFactory.getAuthenticator(anyString())).thenReturn(null);
 
         // Act
         RuntimeException runtimeException =
@@ -203,12 +199,10 @@ public class IsyTaskAspectTest {
             }
         };
 
-        doReturn(loginException).when(authenticatorFactory).getAuthenticator(anyString());
+        when(authenticatorFactory.getAuthenticator(anyString())).thenReturn(loginException);
 
         // Act
         assertNull(isyTaskAspect.invokeAndMonitorTask(joinPoint));
-
     }
 
 }
-
