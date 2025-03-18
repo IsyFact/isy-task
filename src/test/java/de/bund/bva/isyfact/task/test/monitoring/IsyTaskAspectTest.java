@@ -8,7 +8,6 @@ import de.bund.bva.isyfact.task.monitoring.IsyTaskAspect;
 import de.bund.bva.isyfact.task.security.Authenticator;
 import de.bund.bva.isyfact.task.security.AuthenticatorFactory;
 import de.bund.bva.isyfact.task.util.TaskId;
-import de.bund.bva.isyfact.util.text.MessageSourceHolder;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
@@ -28,9 +27,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IsyTaskAspectTest {
@@ -60,6 +57,9 @@ public class IsyTaskAspectTest {
     @Spy
     MeterRegistry meterRegistry = new SimpleMeterRegistry();
 
+    @Spy
+    ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+
     TaskConfig testTaskConfig;
 
     @Before
@@ -72,10 +72,7 @@ public class IsyTaskAspectTest {
 
         doReturn(authenticator).when(authenticatorFactory).getAuthenticator(anyString());
 
-        ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
         resourceBundleMessageSource.setBasenames("messages");
-        MessageSourceHolder messageSourceHolder = new MessageSourceHolder();
-        messageSourceHolder.setMessageSource(resourceBundleMessageSource);
 
         joinPoint = mock(ProceedingJoinPoint.class);
         JoinPoint.StaticPart staticPart = mock(JoinPoint.StaticPart.class);
