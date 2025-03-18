@@ -187,5 +187,28 @@ public class IsyTaskAspectTest {
 
     }
 
+    @Test
+    public void testInvokeAndMonitorTask_authenticatorLoginException() throws Throwable {
+
+        // Prepare
+        Authenticator loginException= new Authenticator() {
+            @Override
+            public void login() {
+                throw new RuntimeException("Login Exception");
+            }
+
+            @Override
+            public void logout() {
+
+            }
+        };
+
+        doReturn(loginException).when(authenticatorFactory).getAuthenticator(anyString());
+
+        // Act
+        assertNull(isyTaskAspect.invokeAndMonitorTask(joinPoint));
+
+    }
+
 }
 
