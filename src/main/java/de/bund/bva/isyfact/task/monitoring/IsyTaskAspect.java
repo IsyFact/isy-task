@@ -108,7 +108,7 @@ public class IsyTaskAspect {
 
         Authenticator authenticator = authenticatorFactory.getAuthenticator(taskId);
         if (authenticator == null) {
-            throw new RuntimeException("Authenticator is null");
+            throw new RuntimeException(String.format("Authenticator for task %s is null", taskId));
         }
         String host;
         boolean isDeactivated;
@@ -117,20 +117,19 @@ public class IsyTaskAspect {
         synchronized (this) {
             taskConfig = isyTaskConfigurationProperties.getTasks().get(taskId);
             if (taskConfig == null) {
-                throw new TaskKonfigurationInvalidException("Keine Taskkonfiguration vorhanden");
+                throw new TaskKonfigurationInvalidException(taskId, "Keine Taskkonfiguration vorhanden");
             }
             isDeactivated = taskConfig.isDeaktiviert();
             host = taskConfig.getHost();
             if (host == null) {
-                String nachricht = messageSource.getMessage(VERWENDE_STANDARD_KONFIGURATION,  new String[] { "hostname" }, Locale.GERMANY);
+                String nachricht = messageSource.getMessage(VERWENDE_STANDARD_KONFIGURATION, new String[] { taskId, "hostname" }, Locale.GERMANY);
                 logger.info(createKategorieMarker(KATEGORIE_JOURNAL), format("{0} {1}", VERWENDE_STANDARD_KONFIGURATION, nachricht));
                 host = isyTaskConfigurationProperties.getDefault().getHost();
             }
             try {
                 Pattern.compile(host);
             } catch (PatternSyntaxException pse) {
-                throw new TaskKonfigurationInvalidException(
-                        "Hostname ist keine gültige Regex");
+                throw new TaskKonfigurationInvalidException(taskId, "Hostname ist keine gültige Regex");
             }
         }
 
