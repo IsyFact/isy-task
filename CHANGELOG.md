@@ -1,3 +1,11 @@
+# 5.0.0
+- `IFS-4576`: Portierung fehlender Tickets aus isy-standards
+- 
+# 4.0.0
+- `IFS-2395`: Umstellung von IsyFact `MessageSourceHolder` auf Spring `MessageSource`
+- `IFS-4329`: IsyTaskAutoConfiguration verhindert jetzt Task-Erstellung im Batch-Profil
+- `IFS-747`: Fehlermeldung bei nicht angegebenen Parametern verbessern
+
 # 3.0.0
 - `IFS-2153`: Umstellung isy-task auf Spring Boot:
     * BREAKING CHANGE: Einführung von Spring Boot
