@@ -8,7 +8,7 @@
 
 Das Konzept Task Scheduling beschreibt die konzeptionellen Grundlagen der Steuerung, d.h. Planung und Ausführung, von Tasks in der IsyFact.
 
-Tasks sind in diesem Kontext periodisch wiederkehrende Tätigkeiten, die innerhalb einer xref:glossary:glossary:master.adoc#glossar-anwendungskomponente[Anwendungskomponente] angesiedelt sind und zur Erfüllung der fachlichen oder technischen Anforderungen der Anwendung beitragen.
+Tasks sind in diesem Kontext periodisch wiederkehrende Tätigkeiten, die innerhalb einer xref:referenzarchitektur:fachlich.adoc#awl-fachliche-architektur[Anwendungskomponente] angesiedelt sind und zur Erfüllung der fachlichen oder technischen Anforderungen der Anwendung beitragen.
 Sie <<abgrenzung-aufgaben-batches,grenzen sich wesentlich>> von xref:glossary:glossary:master.adoc#glossar-batch[Batches] ab.
 
 [[abgrenzung-aufgaben-batches]]
@@ -26,7 +26,7 @@ technischen Prüfungen o.ä.
 
 |Verortung
 |Bestandteil einer Anwendungskomponente
-|Bestandteil eines IT-Systems
+|Batch ist ein IT-Systemtyp
 
 |Planung & Steuerung
 .^|Durch die Anwendung selbst
@@ -148,7 +148,8 @@ Bei der Umsetzung von Tasks ist nichts weiter zu beachten.
 Für die Erhebung detaillierter Statistiken zur Ausführungszeit eines Tasks ermöglicht der Baustein Task Scheduling die Verwendung der Annotation `@Timed` von Micrometer.
 Sie wird, wie `@Scheduled`, an der Methode des Tasks gesetzt.
 
-NOTE: Mehr zu der Annotation `@Timed` findet sich in der https://docs.micrometer.io/micrometer/reference/concepts/timers.html#_the_timed_annotation[Dokumentation von Micrometer].
+[NOTE]:
+Mehr zu der Annotation `@Timed` findet sich in der https://docs.micrometer.io/micrometer/reference/concepts/timers.html#_the_timed_annotation[Dokumentation von Micrometer].
 
 [[konfiguration]]
 === Konfiguration
