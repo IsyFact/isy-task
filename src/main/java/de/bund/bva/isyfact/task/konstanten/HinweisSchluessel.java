@@ -1,9 +1,13 @@
 package de.bund.bva.isyfact.task.konstanten;
 
 /**
- * Die Hinweisschlüssel von isy-task.
+ * The hint keys of isy-task.
  */
-public class HinweisSchluessel {
+public final class HinweisSchluessel {
+
+    private HinweisSchluessel () {
+        // hide constructor, this class contains static content, there is no need to instantiate this class.
+    }
 
     /** Info code if standard configuration is used. **/
     public static final String VERWENDE_STANDARD_KONFIGURATION = "ISYTA20001";

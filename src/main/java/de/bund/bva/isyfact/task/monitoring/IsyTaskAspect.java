@@ -29,7 +29,6 @@ import de.bund.bva.isyfact.task.security.Authenticator;
 import de.bund.bva.isyfact.task.security.AuthenticatorFactory;
 import de.bund.bva.isyfact.task.util.TaskCounterBuilder;
 import de.bund.bva.isyfact.task.util.TaskId;
-import de.bund.bva.isyfact.util.text.MessageSourceHolder;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,19 +36,18 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
+import java.util.Locale;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import static de.bund.bva.isyfact.task.konstanten.HinweisSchluessel.VERWENDE_STANDARD_KONFIGURATION;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.TECHNIKDATEN;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createSchluesselMarker;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.*;
 import static java.text.MessageFormat.format;
 
 @Aspect
@@ -86,16 +84,22 @@ public class IsyTaskAspect {
      **/
     private final Function<Throwable, String> throwableClass = (ex) -> ex.getClass().getSimpleName();
 
+    /** MessageSource to determine the messages. **/
+    private final MessageSource messageSource;
+
     public IsyTaskAspect(
             MeterRegistry registry,
             HostHandler hostHandler,
             IsyTaskConfigurationProperties isyTaskConfigurationProperties,
-            AuthenticatorFactory authenticatorFactory
+            AuthenticatorFactory authenticatorFactory,
+            MessageSource messageSource
+
     ) {
         this.registry = registry;
         this.hostHandler = hostHandler;
         this.isyTaskConfigurationProperties = isyTaskConfigurationProperties;
         this.authenticatorFactory = authenticatorFactory;
+        this.messageSource = messageSource;
     }
 
     @Around("@annotation(org.springframework.scheduling.annotation.Scheduled) || @annotation(de.bund.bva.isyfact.task.annotation.OnceTask)")
@@ -104,7 +108,7 @@ public class IsyTaskAspect {
 
         Authenticator authenticator = authenticatorFactory.getAuthenticator(taskId);
         if (authenticator == null) {
-            throw new RuntimeException("Authenticator is null");
+            throw new RuntimeException(String.format("Authenticator for task %s is null", taskId));
         }
         String host;
         boolean isDeactivated;
@@ -113,20 +117,19 @@ public class IsyTaskAspect {
         synchronized (this) {
             taskConfig = isyTaskConfigurationProperties.getTasks().get(taskId);
             if (taskConfig == null) {
-                throw new TaskKonfigurationInvalidException("Keine Taskkonfiguration vorhanden");
+                throw new TaskKonfigurationInvalidException(taskId, "Keine Taskkonfiguration vorhanden");
             }
             isDeactivated = taskConfig.isDeaktiviert();
             host = taskConfig.getHost();
             if (host == null) {
-                String nachricht = MessageSourceHolder.getMessage(VERWENDE_STANDARD_KONFIGURATION, "hostname");
+                String nachricht = messageSource.getMessage(VERWENDE_STANDARD_KONFIGURATION, new String[] { taskId, "hostname" }, Locale.GERMANY);
                 logger.info(createKategorieMarker(KATEGORIE_JOURNAL), format("{0} {1}", VERWENDE_STANDARD_KONFIGURATION, nachricht));
                 host = isyTaskConfigurationProperties.getDefault().getHost();
             }
             try {
                 Pattern.compile(host);
             } catch (PatternSyntaxException pse) {
-                throw new TaskKonfigurationInvalidException(
-                        "Hostname ist keine gültige Regex");
+                throw new TaskKonfigurationInvalidException(taskId, "Hostname ist keine gültige Regex");
             }
         }
 
@@ -136,7 +139,7 @@ public class IsyTaskAspect {
 
             // Step 2: Check for deactivated task config
             if (isDeactivated) {
-                logger.debug(MessageSourceHolder.getMessage(Ereignisschluessel.TASK_DEAKTIVIERT, taskId));
+                logger.debug(messageSource.getMessage(Ereignisschluessel.TASK_DEAKTIVIERT, new String[] { taskId }, Locale.GERMANY));
                 recordFailure(pjp, TaskDeactivatedException.class.getSimpleName());
                 return null;
             }
