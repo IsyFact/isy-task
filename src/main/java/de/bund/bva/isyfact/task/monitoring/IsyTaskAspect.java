@@ -48,7 +48,6 @@ import java.util.regex.PatternSyntaxException;
 
 import static de.bund.bva.isyfact.task.konstanten.HinweisSchluessel.VERWENDE_STANDARD_KONFIGURATION;
 import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.*;
-import static java.text.MessageFormat.format;
 
 @Aspect
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -123,7 +122,7 @@ public class IsyTaskAspect {
             host = taskConfig.getHost();
             if (host == null) {
                 String nachricht = messageSource.getMessage(VERWENDE_STANDARD_KONFIGURATION, new String[] { taskId, "hostname" }, Locale.GERMANY);
-                logger.info(createKategorieMarker(KATEGORIE_JOURNAL), format("{0} {1}", VERWENDE_STANDARD_KONFIGURATION, nachricht));
+                logger.info(createKategorieMarker(KATEGORIE_JOURNAL), "{} {}", VERWENDE_STANDARD_KONFIGURATION, nachricht);
                 host = isyTaskConfigurationProperties.getDefault().getHost();
             }
             try {
@@ -148,7 +147,7 @@ public class IsyTaskAspect {
             try {
                 if (!hostHandler.isHostApplicable(host)) {
                     // Simply return and do not execute the task.
-                    logger.info(createKategorieMarker(KATEGORIE_JOURNAL), format("{0} Task {1} wird nicht ausgeführt: Hostname muss \"{2}\" entsprechen.", "ISYTA14101", taskId, host));
+                    logger.info(createKategorieMarker(KATEGORIE_JOURNAL), "{} Task {} wird nicht ausgeführt: Hostname muss \"{}\" entsprechen.", "ISYTA14101", taskId, host);
                     recordFailure(pjp, HostNotApplicableException.class.getSimpleName());
                     return null;
                 }
@@ -163,7 +162,7 @@ public class IsyTaskAspect {
             try {
                 authenticator.login();
             } catch (Exception e) {
-                logger.error(createSchluesselMarker(TECHNIKDATEN), format("{0} Authentifizierung des Tasks {1} fehlgeschlagen. Task wird nicht ausgeführt.", "ISYTA14100", taskId), e);
+                logger.error(createSchluesselMarker(TECHNIKDATEN), "{} Authentifizierung des Tasks {} fehlgeschlagen. Task wird nicht ausgeführt.", "ISYTA14100", taskId, e);
                 return null;
             }
 

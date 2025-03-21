@@ -1,6 +1,7 @@
 # 5.0.0
 - `IFS-4576`: Portierung fehlender Tickets aus isy-standards
-- 
+- `IFS-4526`: Logeintrag IsyTaskAspect korrigiert
+
 # 4.0.0
 - `IFS-2395`: Umstellung von IsyFact `MessageSourceHolder` auf Spring `MessageSource`
 - `IFS-4329`: IsyTaskAutoConfiguration verhindert jetzt Task-Erstellung im Batch-Profil
