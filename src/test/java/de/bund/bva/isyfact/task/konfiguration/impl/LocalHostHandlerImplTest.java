@@ -8,8 +8,8 @@ import org.mockito.Mockito;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,7 +24,6 @@ class LocalHostHandlerImplTest {
                 handler.isHostApplicable("TEST");
             });
         }
-
     }
 
 
@@ -47,6 +46,5 @@ class LocalHostHandlerImplTest {
             utilities.when(InetAddress::getLocalHost).thenReturn(address);
             assertFalse(handler.isHostApplicable("TEST"));
         }
-
     }
 }
