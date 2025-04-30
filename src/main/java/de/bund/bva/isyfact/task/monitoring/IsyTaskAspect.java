@@ -18,7 +18,11 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import de.bund.bva.isyfact.logging.util.MdcHelper;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.TECHNIKDATEN;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createSchluesselMarker;
+
 import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties;
 import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties.TaskConfig;
 import de.bund.bva.isyfact.task.exception.HostNotApplicableException;
@@ -30,6 +34,7 @@ import de.bund.bva.isyfact.task.security.Authenticator;
 import de.bund.bva.isyfact.task.security.AuthenticatorFactory;
 import de.bund.bva.isyfact.task.util.TaskCounterBuilder;
 import de.bund.bva.isyfact.task.util.TaskId;
+import de.bund.bva.isyfact.util.logging.MdcHelper;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
