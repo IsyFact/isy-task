@@ -1,7 +1,10 @@
 package de.bund.bva.isyfact.task.monitoring;
 
 import static de.bund.bva.isyfact.task.konstanten.HinweisSchluessel.VERWENDE_STANDARD_KONFIGURATION;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.*;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.TECHNIKDATEN;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createSchluesselMarker;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -17,11 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.TECHNIKDATEN;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createSchluesselMarker;
 
 import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties;
 import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties.TaskConfig;
@@ -73,15 +71,17 @@ public class IsyTaskAspect {
      **/
     private final Function<Throwable, String> throwableClass = (ex) -> ex.getClass().getSimpleName();
 
-    /** MessageSource to determine the messages. **/
+    /**
+     * MessageSource to determine the messages.
+     **/
     private final MessageSource messageSource;
 
     public IsyTaskAspect(
-            MeterRegistry registry,
-            HostHandler hostHandler,
-            IsyTaskConfigurationProperties isyTaskConfigurationProperties,
-            AuthenticatorFactory authenticatorFactory,
-            MessageSource messageSource
+        MeterRegistry registry,
+        HostHandler hostHandler,
+        IsyTaskConfigurationProperties isyTaskConfigurationProperties,
+        AuthenticatorFactory authenticatorFactory,
+        MessageSource messageSource
 
     ) {
         this.registry = registry;
@@ -109,13 +109,25 @@ public class IsyTaskAspect {
                 isDeactivated = taskConfig.isDeaktiviert();
                 host = taskConfig.getHost();
             } else {
-                logger.debug("Keine Konfiguration für Task {} gefunden. Es wird auf die Standardwerte zurückgefallen.", taskId);
+                logger.debug(
+                    "Keine Konfiguration für Task {} gefunden. Es wird auf die Standardwerte zurückgefallen.",
+                    taskId
+                );
             }
 
             // set default values if not provided by task config
             if (host == null) {
-                String nachricht = messageSource.getMessage(VERWENDE_STANDARD_KONFIGURATION, new String[] { taskId, "hostname" }, Locale.GERMANY);
-                logger.info(createKategorieMarker(KATEGORIE_JOURNAL), "{} {}", VERWENDE_STANDARD_KONFIGURATION, nachricht);
+                String nachricht = messageSource.getMessage(
+                    VERWENDE_STANDARD_KONFIGURATION,
+                    new String[] { taskId, "hostname" },
+                    Locale.GERMANY
+                );
+                logger.info(
+                    createKategorieMarker(KATEGORIE_JOURNAL),
+                    "{} {}",
+                    VERWENDE_STANDARD_KONFIGURATION,
+                    nachricht
+                );
                 host = isyTaskConfigurationProperties.getDefault().getHost();
             }
             try {
@@ -131,7 +143,11 @@ public class IsyTaskAspect {
 
             // Step 2: Check for deactivated task config
             if (isDeactivated) {
-                logger.debug(messageSource.getMessage(Ereignisschluessel.TASK_DEAKTIVIERT, new String[] { taskId }, Locale.GERMANY));
+                logger.debug(messageSource.getMessage(
+                    Ereignisschluessel.TASK_DEAKTIVIERT,
+                    new String[] { taskId },
+                    Locale.GERMANY
+                ));
                 recordFailure(pjp, TaskDeactivatedException.class.getSimpleName());
                 return null;
             }
@@ -140,7 +156,13 @@ public class IsyTaskAspect {
             try {
                 if (!hostHandler.isHostApplicable(host)) {
                     // Simply return and do not execute the task.
-                    logger.info(createKategorieMarker(KATEGORIE_JOURNAL), "{} Task {} wird nicht ausgeführt: Hostname muss \"{}\" entsprechen.", "ISYTA14101", taskId, host);
+                    logger.info(
+                        createKategorieMarker(KATEGORIE_JOURNAL),
+                        "{} Task {} wird nicht ausgeführt: Hostname muss \"{}\" entsprechen.",
+                        "ISYTA14101",
+                        taskId,
+                        host
+                    );
                     recordFailure(pjp, HostNotApplicableException.class.getSimpleName());
                     return null;
                 }
@@ -155,7 +177,13 @@ public class IsyTaskAspect {
             try {
                 authenticator.login();
             } catch (Exception e) {
-                logger.error(createSchluesselMarker(TECHNIKDATEN), "{} Authentifizierung des Tasks {} fehlgeschlagen. Task wird nicht ausgeführt.", "ISYTA14100", taskId, e);
+                logger.error(
+                    createSchluesselMarker(TECHNIKDATEN),
+                    "{} Authentifizierung des Tasks {} fehlgeschlagen. Task wird nicht ausgeführt.",
+                    "ISYTA14100",
+                    taskId,
+                    e
+                );
                 return null;
             }
 
