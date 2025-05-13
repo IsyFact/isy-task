@@ -1,16 +1,17 @@
 package de.bund.bva.isyfact.task;
 
-import io.micrometer.core.annotation.Timed;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
-
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+import io.micrometer.core.annotation.Timed;
 
 @Component
 public class TestHostHandlerTasks {

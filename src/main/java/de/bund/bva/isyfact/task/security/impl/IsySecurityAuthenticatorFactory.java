@@ -1,19 +1,20 @@
 package de.bund.bva.isyfact.task.security.impl;
 
-import de.bund.bva.isyfact.security.oauth2.client.Authentifizierungsmanager;
-import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties;
-import de.bund.bva.isyfact.task.konstanten.HinweisSchluessel;
-import de.bund.bva.isyfact.task.security.Authenticator;
-import de.bund.bva.isyfact.task.security.AuthenticatorFactory;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_SICHERHEIT;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.util.StringUtils;
 
-import java.util.Locale;
-
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_SICHERHEIT;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+import de.bund.bva.isyfact.security.oauth2.client.Authentifizierungsmanager;
+import de.bund.bva.isyfact.task.config.IsyTaskConfigurationProperties;
+import de.bund.bva.isyfact.task.konstanten.HinweisSchluessel;
+import de.bund.bva.isyfact.task.security.Authenticator;
+import de.bund.bva.isyfact.task.security.AuthenticatorFactory;
 
 /**
  * Creates Authenticators for authentication with isy-security.

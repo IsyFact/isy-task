@@ -1,17 +1,17 @@
 package de.bund.bva.isyfact.task.konfiguration.impl;
 
-import de.bund.bva.isyfact.task.exception.HostNotApplicableException;
-import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import de.bund.bva.isyfact.task.exception.HostNotApplicableException;
 
 class LocalHostHandlerImplTest {
 
