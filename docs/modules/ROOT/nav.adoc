@@ -1,3 +1,4 @@
-** Tasks
-*** xref:konzept/master.adoc[Konzept]
-*** xref:nutzungsvorgaben/master.adoc[Nutzungsvorgaben]
+* xref:konzept.adoc[Konzept]
+** xref:konzept/integration-isyfact.adoc[]
+** xref:konzept/erweiterung-spring.adoc[]
+* xref:nutzungsvorgaben.adoc[Nutzungsvorgaben]
