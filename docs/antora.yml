@@ -1,7 +1,5 @@
-name: isy-task-doc
-title: isy-task
-version: '5.0.0 SNAPSHOT'
-display_version: '5.0.0 SNAPSHOT'
-start_page: ROOT:konzept/master.adoc
+name: task
+title: Baustein Task Scheduling
+start_page: ROOT:konzept.adoc
 nav:
 - modules/ROOT/nav.adoc
