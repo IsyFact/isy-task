@@ -47,7 +47,7 @@ Wie bereits erwähnt, rufen Tasks fachliche Operationen auf.
 Manche dieser Operationen sind abgesichert, d.h. sie erfordern bestimmte Rechte zum Aufruf.
 Diese Rechte sind authentifizierten Benutzern bzw. Clients zugeordnet.
 
-Die Absicherung des Bausteins Task Scheduling basiert auf dem _Standard OAuth2.0_ und nutzt hierfür den Baustein Security und dessen xref:4.0.0@isyfact-standards-doku:isy-security:konzept/master.adoc#aussensicht-der-komponente-security[Schnittstelle zur Authentifizierung].
+Die Absicherung des Bausteins Task Scheduling basiert auf dem _Standard OAuth2.0_ und nutzt hierfür den Baustein Security und dessen xref:security::konzept.adoc#aussensicht-der-komponente-security[Schnittstelle zur Authentifizierung].
 Die Konfiguration von Tasks, sowie die globale Konfiguration aller Tasks, bietet dazu die Möglichkeit, Credentials (d.h. Benutzernamen & Passwörter oder Client-IDs & Client Secrets) sowie Behördenkennzeichen zu setzen.
 
 Bei der Umsetzung von Tasks muss die Konfiguration mit konkreten Werten belegt werden.
