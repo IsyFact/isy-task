@@ -1,6 +1,0 @@
-= Nutzungsvorgaben Tasks: Einleitung
-
-// tag::inhalt[]
-
-
-// end::inhalt[]
