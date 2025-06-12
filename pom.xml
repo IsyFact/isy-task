@@ -45,9 +45,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <isy-util.version>4.0.0-SNAPSHOT</isy-util.version>
-        <isy-security.version>3.0.0</isy-security.version>
-        <isy-security-test.version>3.0.0</isy-security-test.version>
+        <isy-util.version>5.0.0-SNAPSHOT</isy-util.version>
+        <isy-security.version>5.0.0</isy-security.version>
+        <isy-security-test.version>5.0.0</isy-security-test.version>
 
         <logback.version>1.4.14</logback.version>
 
