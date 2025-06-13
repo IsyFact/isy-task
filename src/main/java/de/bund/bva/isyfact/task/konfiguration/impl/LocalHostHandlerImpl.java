@@ -1,12 +1,13 @@
 package de.bund.bva.isyfact.task.konfiguration.impl;
 
-import de.bund.bva.isyfact.task.exception.HostNotApplicableException;
-import de.bund.bva.isyfact.task.konfiguration.HostHandler;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import de.bund.bva.isyfact.task.exception.HostNotApplicableException;
+import de.bund.bva.isyfact.task.konfiguration.HostHandler;
 
 /**
  * The HostHandler is a utility class that checks a host instance.

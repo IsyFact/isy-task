@@ -1,18 +1,19 @@
 package de.bund.bva.isyfact.task.demo;
 
-import io.micrometer.core.annotation.Timed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_SICHERHEIT;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_SICHERHEIT;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import io.micrometer.core.annotation.Timed;
 
 @Component
 public class ScheduledTasks {
