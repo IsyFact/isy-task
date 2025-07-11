@@ -1,8 +1,8 @@
 package de.bund.bva.isyfact.task.exception;
 
-import java.io.Serial;
-
 import static de.bund.bva.isyfact.util.text.MessageProvider.createMessage;
+
+import java.io.Serial;
 
 public class TaskRuntimeException extends RuntimeException {
 

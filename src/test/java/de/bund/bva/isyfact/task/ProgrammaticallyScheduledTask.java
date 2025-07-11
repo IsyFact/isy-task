@@ -1,17 +1,18 @@
 package de.bund.bva.isyfact.task;
 
-import de.bund.bva.isyfact.task.annotation.OnceTask;
-import de.bund.bva.isyfact.task.demo.ScheduledTasks;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
+import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.KATEGORIE_JOURNAL;
-import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKategorieMarker;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import de.bund.bva.isyfact.task.annotation.OnceTask;
+import de.bund.bva.isyfact.task.demo.ScheduledTasks;
 
 @Component
 public class ProgrammaticallyScheduledTask implements Runnable {
