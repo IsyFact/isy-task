@@ -49,7 +49,7 @@
 
         <isy-util.version>5.0.0-SNAPSHOT</isy-util.version>
         <isy-security.version>5.0.0-SNAPSHOT</isy-security.version>
-        <isy-security-test.version>4.0.0</isy-security-test.version>
+        <isy-security-test.version>4.1.0</isy-security-test.version>
         <isy-checkstyle-config.version>0.2.0</isy-checkstyle-config.version>
 
         <spring.boot.version>3.4.5</spring.boot.version>
