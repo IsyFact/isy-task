@@ -1,6 +1,7 @@
 package de.bund.bva.isyfact.task;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -95,5 +96,39 @@ class TestTaskAuthentication extends AbstractOidcProviderTest {
 
         TestTaskRunAssertion.assertTaskFailure(className, annotatedMethodName, registry,
                 AuthorizationDeniedException.class.getSimpleName());
+    }
+
+    @Test
+    void testTaskSecuredNoAuthentication() throws Exception {
+        embeddedOidcProvider.removeAllClients();
+        embeddedOidcProvider.removeAllUsers();
+
+        SECONDS.sleep(5);
+
+        assertThat(TestTaskAuthenticationTasks.wasCalled.get()).isFalse();
+    }
+
+    @Test
+    void testTaskSecuredMissingRoles() throws Exception {
+        embeddedOidcProvider.removeAllClients();
+        embeddedOidcProvider.removeAllUsers();
+        embeddedOidcProvider.addUser(
+            ropcClientId,
+            ropcClientSecret,
+            ropcUser,
+            ropcPassword,
+            Optional.of(ropcBhknz),
+            Collections.emptySet()
+        );
+
+        String className = TestTaskAuthenticationTasks.class.getSimpleName();
+        String annotatedMethodName = "scheduledTaskSecured";
+
+        SECONDS.sleep(5);
+
+        TestTaskRunAssertion.assertTaskFailure(
+            className, annotatedMethodName, registry,
+            AuthorizationDeniedException.class.getSimpleName()
+        );
     }
 }

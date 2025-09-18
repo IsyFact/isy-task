@@ -5,6 +5,7 @@ import static de.bund.bva.isyfact.util.logging.CombinedMarkerFactory.createKateg
 
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,12 @@ public class TestTaskAuthenticationTasks {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestTaskAuthenticationTasks.class);
 
+    public static final AtomicBoolean wasCalled = new AtomicBoolean(false);
+
     @Scheduled(fixedRate = 1, timeUnit = TimeUnit.SECONDS)
     @Secured("PRIV_Recht1")
     public void scheduledTaskSecured() {
+        wasCalled.set(true);
         LOG.info(createKategorieMarker(KATEGORIE_JOURNAL), SCHLUESSEL, "test task - scheduled - secured - executed at {}", LocalDateTime.now());
     }
 
