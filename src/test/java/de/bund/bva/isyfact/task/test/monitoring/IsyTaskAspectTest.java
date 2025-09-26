@@ -30,9 +30,6 @@ import de.bund.bva.isyfact.task.monitoring.IsyTaskAspect;
 import de.bund.bva.isyfact.task.security.Authenticator;
 import de.bund.bva.isyfact.task.security.AuthenticatorFactory;
 
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -55,9 +52,6 @@ public class IsyTaskAspectTest {
 
     @Spy
     private IsyTaskConfigurationProperties properties = new IsyTaskConfigurationProperties();
-
-    @Spy
-    private MeterRegistry meterRegistry = new SimpleMeterRegistry();
 
     @Spy
     private ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
