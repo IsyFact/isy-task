@@ -52,7 +52,7 @@
         <isy-security-test.version>4.0.0</isy-security-test.version>
         <isy-checkstyle-config.version>0.2.0</isy-checkstyle-config.version>
 
-        <spring.boot.version>3.4.5</spring.boot.version>
+        <spring.boot.version>3.5.6</spring.boot.version>
 
         <maven.jacoco.argLine/>
 
