@@ -12,3 +12,4 @@
     * Setzen der Maven Version auf 3.6.3
 - `IFS-4655`: Update von Maven Checkstyle Plugin auf Version 3.6.0
 - `IFS-4580`: Spring-Boot Update auf Version 3.4.5
+- `IFS-4864`: Spring-Boot Update auf Version 3.5.6
