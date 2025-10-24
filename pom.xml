@@ -39,6 +39,7 @@
         <maven.surefire.version>3.5.3</maven.surefire.version>
         <maven.checkstyle.version>3.6.0</maven.checkstyle.version>
         <maven-enforcer-plugin.version>3.6.0</maven-enforcer-plugin.version>
+        <enforced.jdk.version>[17,22)</enforced.jdk.version>
         <enforced.maven.version>[3.6.3,4)</enforced.maven.version>
         <maven.jacoco.version>0.8.12</maven.jacoco.version>
         <maven.javadoc.plugin.version>3.3.2</maven.javadoc.plugin.version>
@@ -195,6 +196,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.nimbusds</groupId>
+                    <artifactId>nimbus-jose-jwt</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -279,10 +286,25 @@
                             </goals>
                             <configuration>
                                 <rules>
+                                    <requireJavaVersion>
+                                        <version>${enforced.jdk.version}</version>
+                                    </requireJavaVersion>
                                     <requireMavenVersion>
                                         <version>${enforced.maven.version}</version>
                                     </requireMavenVersion>
                                 </rules>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>enforce-dependency-convergence</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <dependencyConvergence/>
+                                </rules>
+                                <fail>true</fail>
                             </configuration>
                         </execution>
                     </executions>
