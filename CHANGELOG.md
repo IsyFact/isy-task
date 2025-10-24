@@ -5,6 +5,7 @@
 - `IFS-4576`: Portierung fehlender Tickets aus isy-standards
 - `IFS-4526`: Logeintrag IsyTaskAspect korrigiert
 - `IFS-4495`: Verwendung der Defaults, falls keine Task-Config definiert ist
+- `IFS-4583`: Wiedereinführung der Quality-Gates
 
 ### DEPENDENCY UPGRADES
 - `IFS-4531`: Update von Flatten Maven Plugin auf Version 1.7.1
