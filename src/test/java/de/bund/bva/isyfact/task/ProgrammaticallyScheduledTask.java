@@ -28,7 +28,7 @@ public class ProgrammaticallyScheduledTask implements Runnable {
             try {
                 MILLISECONDS.sleep(100);
                 LOG.info(createKategorieMarker(KATEGORIE_JOURNAL), "EISYTA99994", "Manual Task {} :: Execution Time - {}", i, dateTimeFormatter.format(LocalDateTime.now()));
-            } catch (InterruptedException e) {
+            } catch (InterruptedException _) {
                 LOG.debug("Thread unterbrochen");
                 return;
             }
