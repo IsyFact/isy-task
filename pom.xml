@@ -39,6 +39,7 @@
         <maven.surefire.version>3.5.3</maven.surefire.version>
         <maven.checkstyle.version>3.6.0</maven.checkstyle.version>
         <maven-enforcer-plugin.version>3.6.0</maven-enforcer-plugin.version>
+        <enforced.jdk.version>[17,22)</enforced.jdk.version>
         <enforced.maven.version>[3.6.3,4)</enforced.maven.version>
         <maven.jacoco.version>0.8.12</maven.jacoco.version>
         <maven.javadoc.plugin.version>3.3.2</maven.javadoc.plugin.version>
@@ -51,6 +52,7 @@
         <isy-security.version>5.0.0-SNAPSHOT</isy-security.version>
         <isy-security-test.version>4.0.0</isy-security-test.version>
         <isy-checkstyle-config.version>0.2.0</isy-checkstyle-config.version>
+        <spotbugs.version>4.8.5.0</spotbugs.version>
 
         <spring.boot.version>3.5.6</spring.boot.version>
 
@@ -195,6 +197,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.nimbusds</groupId>
+                    <artifactId>nimbus-jose-jwt</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -279,10 +287,25 @@
                             </goals>
                             <configuration>
                                 <rules>
+                                    <requireJavaVersion>
+                                        <version>${enforced.jdk.version}</version>
+                                    </requireJavaVersion>
                                     <requireMavenVersion>
                                         <version>${enforced.maven.version}</version>
                                     </requireMavenVersion>
                                 </rules>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>enforce-dependency-convergence</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <dependencyConvergence/>
+                                </rules>
+                                <fail>true</fail>
                             </configuration>
                         </execution>
                     </executions>
@@ -308,6 +331,26 @@
                     <executions>
                         <execution>
                             <id>validate</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${spotbugs.version}</version>
+                    <configuration>
+                        <effort>Max</effort>
+                        <threshold>high</threshold>
+                        <xmlOutput>true</xmlOutput>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>execute-spot-bugs</id>
                             <phase>validate</phase>
                             <goals>
                                 <goal>check</goal>
@@ -385,7 +428,7 @@
                     <version>${maven.flatten.version}</version>
                     <configuration>
                         <updatePomFile>true</updatePomFile>
-                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                        <flattenMode>oss</flattenMode>
                     </configuration>
                     <executions>
                         <execution>
@@ -424,6 +467,10 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>tidy-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
