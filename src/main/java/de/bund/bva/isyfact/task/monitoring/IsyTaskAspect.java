@@ -97,7 +97,7 @@ public class IsyTaskAspect {
 
         Authenticator authenticator = authenticatorFactory.getAuthenticator(taskId);
         if (authenticator == null) {
-            throw new RuntimeException(String.format("Authenticator for task %s is null", taskId));
+            throw new RuntimeException("Authenticator for task %s is null".formatted(taskId));
         }
 
         String host = null;
@@ -132,7 +132,7 @@ public class IsyTaskAspect {
             }
             try {
                 Pattern.compile(host);
-            } catch (PatternSyntaxException pse) {
+            } catch (PatternSyntaxException _) {
                 throw new TaskKonfigurationInvalidException(taskId, "Hostname ist keine gültige Regex");
             }
         }
@@ -206,7 +206,7 @@ public class IsyTaskAspect {
         try {
             Counter successCounter = TaskCounterBuilder.successCounter(pjp, registry);
             successCounter.increment();
-        } catch (Exception e) {
+        } catch (Exception _) {
             // do not rethrow!
             logger.warn(Ereignisschluessel.METRIC_WARNUNG, "Could not increment successCounter");
 
@@ -217,7 +217,7 @@ public class IsyTaskAspect {
         try {
             Counter failureCounter = TaskCounterBuilder.failureCounter(pjp, exceptionClass, registry);
             failureCounter.increment();
-        } catch (Exception e) {
+        } catch (Exception _) {
             // do not rethrow!
             logger.warn(Ereignisschluessel.METRIC_WARNUNG, "Could not increment failureCounter");
         }
