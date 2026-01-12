@@ -12,6 +12,8 @@
 
 ### DEPENDENCY UPGRADES
 - Update org.apache.maven.plugins:maven-enforcer-plugin von Version 3.6.0 auf 3.6.2
+- Update org.codehaus.mojo:flatten-maven-plugin von Version 1.7.1 auf 1.7.3
+- Update org.apache.maven.plugins:maven-source-plugin von Version 3.2.1 auf 3.4.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/maven_build_template.yml von Version 1.7.0 auf 1.8.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/docs_build_template.yml von Version 1.7.0 auf 1.8.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/commit_message_checker_template.yml von Version 1.7.0 auf 1.8.0
