@@ -51,7 +51,7 @@
         <isy-security.version>5.0.0-SNAPSHOT</isy-security.version>
         <isy-security-test.version>4.1.0</isy-security-test.version>
         <isy-checkstyle-config.version>0.2.0</isy-checkstyle-config.version>
-        <spotbugs.version>4.9.8.1</spotbugs.version>
+        <spotbugs.version>4.9.8.2</spotbugs.version>
 
         <spring.boot.version>3.5.9</spring.boot.version>
 
