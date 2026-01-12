@@ -11,6 +11,7 @@
 - `IFS-4922`: Aktualisierung von Java 17 auf 25
 
 ### DEPENDENCY UPGRADES
+- Update com.github.spotbugs:spotbugs-maven-plugin von Version 4.9.8.1 auf 4.9.8.2
 - Update spring.boot.version von Version 3.5.6 auf 3.5.9
 - Update org.apache.maven.plugins:maven-enforcer-plugin von Version 3.6.0 auf 3.6.2
 - Update org.codehaus.mojo:flatten-maven-plugin von Version 1.7.1 auf 1.7.3
