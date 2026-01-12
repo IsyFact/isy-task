@@ -11,6 +11,7 @@
 - `IFS-4922`: Aktualisierung von Java 17 auf 25
 
 ### DEPENDENCY UPGRADES
+- Update IsyFact/isy-github-actions-templates/.github/workflows/dependency_review_template.yml von Version 2.0.0 auf 2.1.1
 - Update spring.boot.version von Version 3.5.6 auf 3.5.9
 - Update org.apache.maven.plugins:maven-enforcer-plugin von Version 3.6.0 auf 3.6.2
 - Update org.codehaus.mojo:flatten-maven-plugin von Version 1.7.1 auf 1.7.3
