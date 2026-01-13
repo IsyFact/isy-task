@@ -11,6 +11,7 @@
 - `IFS-4922`: Aktualisierung von Java 17 auf 25
 
 ### DEPENDENCY UPGRADES
+- Update org.cyclonedx:cyclonedx-maven-plugin von Version 2.7.11 auf 2.9.1
 - Update org.apache.maven.plugins:maven-gpg-plugin von Version 3.0.1 auf 3.2.8
 - Update com.github.spotbugs:spotbugs-maven-plugin von Version 4.9.8.1 auf 4.9.8.2
 - Update org.sonatype.central:central-publishing-maven-plugin von Version 0.8.0 auf 0.10.0
