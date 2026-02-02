@@ -8,6 +8,8 @@
 - `IFS-4583`: Wiedereinführung der Quality-Gates
 
 ### BREAKING CHANGES
+- `IFS-4859`: Spring-Boot Update auf Version 4 (inkludiert Update auf Spring Framework 7)
+  * Der Resource Owner Password Credential Flow wird mit dieser Version nicht mehr unterstützt. Anwendungen müssen zwingend auf den Client Credentials Flow umsteigen.
 - `IFS-4922`: Aktualisierung von Java 17 auf 25
 
 ### DEPENDENCY UPGRADES
