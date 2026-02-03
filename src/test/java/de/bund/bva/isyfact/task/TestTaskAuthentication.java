@@ -4,7 +4,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,43 +34,30 @@ class TestTaskAuthentication extends AbstractOidcProviderTest {
     @Autowired
     private MeterRegistry registry;
 
-    @Value("${spring.security.oauth2.client.registration.ropc-testclient.client-id}")
-    private String ropcClientId;
-
-    @Value("${spring.security.oauth2.client.registration.ropc-testclient.client-secret}")
-    private String ropcClientSecret;
-
-    @Value("${isy.security.oauth2.client.registration.ropc-testclient.username}")
-    private String ropcUser;
-
-    @Value("${isy.security.oauth2.client.registration.ropc-testclient.password}")
-    private String ropcPassword;
-
-    @Value("${isy.security.oauth2.client.registration.ropc-testclient.bhknz}")
-    private String ropcBhknz;
-
     @Value("${spring.security.oauth2.client.registration.cc-testclient.client-id}")
     private String ccClientId;
 
     @Value("${spring.security.oauth2.client.registration.cc-testclient.client-secret}")
     private String ccClientSecret;
 
+    @Value("${spring.security.oauth2.client.registration.cc-insufficient-testclient.client-id}")
+    private String ccInsufficientClientId;
+
+    @Value("${spring.security.oauth2.client.registration.cc-insufficient-testclient.client-secret}")
+    private String ccInsufficientClientSecret;
+
     @BeforeEach
     public void setup() {
         embeddedOidcProvider.removeAllClients();
         embeddedOidcProvider.removeAllUsers();
-        // client with authorization-grant-type=password
-        embeddedOidcProvider.addUser(
-                ropcClientId,
-                ropcClientSecret,
-                ropcUser,
-                ropcPassword,
-                Optional.of(ropcBhknz),
-                Collections.singleton("Rolle1")
-        );
         embeddedOidcProvider.addClient(
                 ccClientId,
                 ccClientSecret,
+                Collections.singleton("Rolle1")
+        );
+        embeddedOidcProvider.addClient(
+                ccInsufficientClientId,
+                ccInsufficientClientSecret,
                 Collections.singleton("Rolle2")
         );
     }
@@ -112,12 +98,9 @@ class TestTaskAuthentication extends AbstractOidcProviderTest {
     void testTaskSecuredMissingRoles() throws Exception {
         embeddedOidcProvider.removeAllClients();
         embeddedOidcProvider.removeAllUsers();
-        embeddedOidcProvider.addUser(
-            ropcClientId,
-            ropcClientSecret,
-            ropcUser,
-            ropcPassword,
-            Optional.of(ropcBhknz),
+        embeddedOidcProvider.addClient(
+            ccClientId,
+            ccClientSecret,
             Collections.emptySet()
         );
 
