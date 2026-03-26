@@ -13,6 +13,7 @@
 - `IFS-4922`: Aktualisierung von Java 17 auf 25
 
 ### DEPENDENCY UPGRADES
+- Update org.cyclonedx:cyclonedx-maven-plugin von Version 2.7.11 auf 2.9.1
 - Update IsyFact/isy-github-actions-templates/.github/workflows/commit_message_checker_template.yml von Version 2.1.1 auf 2.3.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/docs_build_template.yml von Version 2.2.1 auf 2.3.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/maven_build_template.yml von Version 2.1.1 auf 2.3.0
