@@ -13,6 +13,7 @@
 - `IFS-4922`: Aktualisierung von Java 17 auf 25
 
 ### DEPENDENCY UPGRADES
+- Update spring.boot.version von Version 3.5.9 auf 3.5.10
 - Update org.apache.maven.plugins:maven-compiler-plugin von Version 3.14.1 auf 3.15.0
 - Update org.apache.maven.plugins:maven-javadoc-plugin von Version 3.3.2 auf 3.12.0
 - Update org.cyclonedx:cyclonedx-maven-plugin von Version 2.7.11 auf 2.9.1
