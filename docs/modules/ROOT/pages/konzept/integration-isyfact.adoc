@@ -59,7 +59,7 @@ Es kann aber auch global konfiguriert werden, dass keine Authentifizierung erfor
 
 Tasks müssen dem Monitoring Informationen über ihre Ausführungen bereitstellen.
 
-Der Baustein Task Scheduling nutzt hierzu die Möglichkeiten des Frameworks xref:isyfact-standards-doku:isy-ueberwachung:konzept/master.adoc#micrometer[Micrometer], das der Baustein Überwachung nutzt, und definiert folgende Metriken:
+Der Baustein Task Scheduling nutzt hierzu die Möglichkeiten des Frameworks xref:ueberwachung::konzept.adoc#micrometer[Micrometer], das der Baustein Überwachung nutzt, und definiert folgende Metriken:
 
 * Anzahl erfolgreicher Ausführungen pro Task,
 * Anzahl nicht erfolgreicher Ausführungen pro Task,
