@@ -13,6 +13,7 @@
 - `IFS-4922`: Aktualisierung von Java 17 auf 25
 
 ### DEPENDENCY UPGRADES
+- Update com.github.spotbugs:spotbugs-maven-plugin von Version 4.9.8.2 auf 4.9.8.3
 - Update IsyFact/isy-github-actions-templates/.github/workflows/dependabot_auto_changelog_template.yml von Version 2.1.1 auf 2.3.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/next_version.yml von Version 2.2.0 auf 2.3.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/maven_create_release_template.yml von Version 2.1.1 auf 2.3.0
