@@ -4,6 +4,7 @@
 ### BREAKING CHANGES
 
 ### DEPENDENCY UPGRADES
+- Update org.apache.maven.plugins:maven-surefire-plugin von Version 3.5.5 auf 3.5.6
 - Update spring.boot.version von Version 4.0.5 auf 4.1.0
 - Update org.apache.maven.plugins:maven-enforcer-plugin von Version 3.6.2 auf 3.6.3
 - Update org.jacoco:jacoco-maven-plugin von Version 0.8.14 auf 0.8.15
