@@ -4,6 +4,7 @@
 ### BREAKING CHANGES
 
 ### DEPENDENCY UPGRADES
+- Update IsyFact/isy-github-actions-templates/.github/workflows/maven_create_release_template.yml von Version 2.3.0 auf 3.0.0
 - Update org.codehaus.mojo:flatten-maven-plugin von Version 1.7.3 auf 1.8.0
 - Update org.apache.maven.plugins:maven-jar-plugin von Version 3.5.0 auf 3.5.1
 - Update org.cyclonedx:cyclonedx-maven-plugin von Version 2.9.1 auf 2.9.2
