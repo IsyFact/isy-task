@@ -4,6 +4,7 @@
 ### BREAKING CHANGES
 
 ### DEPENDENCY UPGRADES
+- Update org.apache.maven.plugins:maven-surefire-plugin von Version 3.5.6 auf 3.6.0
 - Update org.cyclonedx:cyclonedx-maven-plugin von Version 2.9.2 auf 2.9.3
 - Update IsyFact/isy-github-actions-templates/.github/workflows/maven_deploy_template.yml von Version 2.3.0 auf 3.0.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/maven_create_release_template.yml von Version 2.3.0 auf 3.0.0
