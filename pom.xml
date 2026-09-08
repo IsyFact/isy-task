@@ -51,7 +51,7 @@
         <isy-security.version>5.0.1</isy-security.version>
         <isy-security-test.version>5.0.1</isy-security-test.version>
         <isy-checkstyle-config.version>0.2.0</isy-checkstyle-config.version>
-        <spotbugs.version>4.10.3.0</spotbugs.version>
+        <spotbugs.version>4.10.4.1</spotbugs.version>
 
         <spring.boot.version>4.1.1</spring.boot.version>
 
