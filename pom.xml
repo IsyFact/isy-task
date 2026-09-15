@@ -62,7 +62,7 @@
         <maven.flatten.version>1.8.0</maven.flatten.version>
         <maven.cyclondx.version>2.9.3</maven.cyclondx.version>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
-        <tidy-maven-plugin.version>1.4.0</tidy-maven-plugin.version>
+        <tidy-maven-plugin.version>1.4.1</tidy-maven-plugin.version>
     </properties>
 
     <dependencyManagement>

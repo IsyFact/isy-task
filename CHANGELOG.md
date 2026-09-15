@@ -4,6 +4,7 @@
 ### BREAKING CHANGES
 
 ### DEPENDENCY UPGRADES
+- Update org.codehaus.mojo:tidy-maven-plugin von Version 1.4.0 auf 1.4.1
 - Update org.cyclonedx:cyclonedx-maven-plugin von Version 2.9.2 auf 2.9.3
 - Update IsyFact/isy-github-actions-templates/.github/workflows/maven_deploy_template.yml von Version 2.3.0 auf 3.0.0
 - Update IsyFact/isy-github-actions-templates/.github/workflows/maven_create_release_template.yml von Version 2.3.0 auf 3.0.0
